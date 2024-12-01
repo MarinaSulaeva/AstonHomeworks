@@ -91,9 +91,8 @@ public class CollectionTests {
         collection.add("один");
         collection.add("два");
         collection.add("три");
-        collection.add("один");
         MyCastomArrayList<String> myStringList = new MyCastomArrayList<>(collection);
-        String expexted = "один";
+        String expexted = "два";
         String result = myStringList.remove(1);
         Assertions.assertEquals(expexted, result);
         String [] resultArray = {"один", "три", null, null, null};
