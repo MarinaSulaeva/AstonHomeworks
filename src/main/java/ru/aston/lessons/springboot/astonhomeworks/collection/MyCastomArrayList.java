@@ -1,13 +1,14 @@
 package ru.aston.lessons.springboot.astonhomeworks.collection;
 
-import java.util.AbstractList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Comparator;
+import lombok.Getter;
+
+import javax.print.DocFlavor;
+import java.util.*;
 
 public class MyCastomArrayList<E> extends AbstractList<E> {
     private static final int INIT_CAPACITY = 10;
     private static final double EXPANSION_RATIO = 1.5;
+    @Getter
     private E[] array;
     private int size;
 
@@ -117,6 +118,7 @@ public class MyCastomArrayList<E> extends AbstractList<E> {
 
     public void sort(Comparator<? super E> c) {
         Arrays.sort(this.array, 0, size, c);
+        Map<String, String> map = new HashMap<>();
     }
 
 
@@ -128,7 +130,4 @@ public class MyCastomArrayList<E> extends AbstractList<E> {
                 '}';
     }
 
-    public E[] getArray() {
-        return array;
-    }
 }
