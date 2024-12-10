@@ -1,15 +1,16 @@
-package ru.aston.lessons.springboot.astonhomeworks.servlets;
+package ru.aston.lessons.springboot.astonhomeworks.servlets.jdbc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ru.aston.lessons.springboot.astonhomeworks.dto.TeacherCreate;
-import ru.aston.lessons.springboot.astonhomeworks.dto.TeacherDTO;
+import ru.aston.lessons.springboot.astonhomeworks.dto.StudentCreate;
+import ru.aston.lessons.springboot.astonhomeworks.dto.StudentDTO;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import ru.aston.lessons.springboot.astonhomeworks.exceptions.TeacherNotFoundException;
-import ru.aston.lessons.springboot.astonhomeworks.service.TeacherService;
-import ru.aston.lessons.springboot.astonhomeworks.service.impl.TeacherServiceImpl;
+import ru.aston.lessons.springboot.astonhomeworks.exceptions.StudentNotFoundException;
+import ru.aston.lessons.springboot.astonhomeworks.service.StudentService;
+import ru.aston.lessons.springboot.astonhomeworks.service.impl.jdbc.StudentServiceImpl;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,8 +18,8 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.Optional;
 
-@WebServlet(urlPatterns = {"/teacher/*"})
-public class TeacherServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/jdbc/student/*"})
+public class StudentServlet extends HttpServlet {
 
 
     private static void setJsonHeader(HttpServletResponse resp) {
@@ -41,23 +42,23 @@ public class TeacherServlet extends HttpServlet {
         setJsonHeader(resp);
 
         String responseAnswer = "";
-        TeacherService teacherService = new TeacherServiceImpl();
+        StudentService studentService = new StudentServiceImpl();
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             String[] pathPart = req.getPathInfo().split("/");
             if ("all".equals(pathPart[1])) {
-                List<TeacherDTO> teacherDTOS = teacherService.getTeachers();
+                List<StudentDTO> students = studentService.getStudents();
                 resp.setStatus(HttpServletResponse.SC_OK);
-                responseAnswer = objectMapper.writeValueAsString(teacherDTOS);
+                responseAnswer = objectMapper.writeValueAsString(students);
             } else {
-                int idTeacher = Integer.parseInt(pathPart[1]);
-                TeacherDTO teacherDTO = teacherService.getTeacher(idTeacher);
+                int idStudent = Integer.parseInt(pathPart[1]);
+                StudentDTO studentDTO = studentService.getStudent(idStudent);
                 resp.setStatus(HttpServletResponse.SC_OK);
-                responseAnswer = objectMapper.writeValueAsString(teacherDTO);
+                responseAnswer = objectMapper.writeValueAsString(studentDTO);
             }
-        } catch (TeacherNotFoundException e) {
+        } catch (StudentNotFoundException e) {
             resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            responseAnswer = "Teacher doesn't found";
+            responseAnswer = "student doesn't found";
         } catch (Exception e) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             responseAnswer = "Bad request.";
@@ -71,15 +72,15 @@ public class TeacherServlet extends HttpServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         setJsonHeader(resp);
         String responseAnswer = "";
-        TeacherService teacherService = new TeacherServiceImpl();
+        StudentService studentService = new StudentServiceImpl();
         try {
             String[] pathPart = req.getPathInfo().split("/");
-            int teacherId = Integer.parseInt(pathPart[1]);
+            int studentId = Integer.parseInt(pathPart[1]);
             resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
-            teacherService.deleteTeacher(teacherId);
-        } catch (TeacherNotFoundException e) {
+            studentService.deleteStudent(studentId);
+        } catch (StudentNotFoundException e) {
             resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            responseAnswer = "Teacher doesn't found";
+            responseAnswer = "student doesn't found";
         } catch (Exception e) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             responseAnswer = "Bad request.";
@@ -95,13 +96,13 @@ public class TeacherServlet extends HttpServlet {
         String json = getJson(req);
 
         String responseAnswer = "";
-        Optional<TeacherCreate> teacherResponse;
-        TeacherService teacherService = new TeacherServiceImpl();
+        Optional<StudentCreate> studentResponse;
+        StudentService studentService = new StudentServiceImpl();
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            teacherResponse = Optional.ofNullable(objectMapper.readValue(json, TeacherCreate.class));
-            TeacherCreate teacherCreate = teacherResponse.orElseThrow(IllegalArgumentException::new);
-            teacherService.addTeacher(teacherCreate);
+            studentResponse = Optional.ofNullable(objectMapper.readValue(json, StudentCreate.class));
+            StudentCreate student = studentResponse.orElseThrow(IllegalArgumentException::new);
+            studentService.addStudent(student);
         } catch (Exception e) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             responseAnswer = "Incorrect user Object.";
@@ -117,16 +118,16 @@ public class TeacherServlet extends HttpServlet {
         String json = getJson(req);
 
         String responseAnswer = "";
-        Optional<TeacherDTO> teacherResponse;
-        TeacherService teacherService = new TeacherServiceImpl();
+        Optional<StudentDTO> studentResponse;
+        StudentService studentService = new StudentServiceImpl();
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            teacherResponse = Optional.ofNullable(objectMapper.readValue(json, TeacherDTO.class));
-            TeacherDTO teacherDTO= teacherResponse.orElseThrow(IllegalArgumentException::new);
-            teacherService.updateTeacher(teacherDTO);
-        } catch (TeacherNotFoundException e) {
+            studentResponse = Optional.ofNullable(objectMapper.readValue(json, StudentDTO.class));
+            StudentDTO studentDTO = studentResponse.orElseThrow(IllegalArgumentException::new);
+            studentService.updateStudent(studentDTO);
+        } catch (StudentNotFoundException e) {
             resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            responseAnswer = "Teacher doesn't found";
+            responseAnswer = "student doesn't found";
         } catch (Exception e) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             responseAnswer = "Incorrect user Object.";
