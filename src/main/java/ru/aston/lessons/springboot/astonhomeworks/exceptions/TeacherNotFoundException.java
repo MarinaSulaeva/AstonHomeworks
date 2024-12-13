@@ -1,6 +1,9 @@
 package ru.aston.lessons.springboot.astonhomeworks.exceptions;
 
-import java.io.IOException;
 
-public class TeacherNotFoundException extends IOException {
+
+public class TeacherNotFoundException extends RuntimeException {
+    public TeacherNotFoundException(String message) {
+        super(message);
+    }
 }
