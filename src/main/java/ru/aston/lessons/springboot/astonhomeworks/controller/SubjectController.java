@@ -40,13 +40,13 @@ public class SubjectController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteSubject(@PathVariable Integer id) {
+    public ResponseEntity<?> deleteSubject(@PathVariable("id") Integer id) {
         subjectService.deleteSubject(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @GetMapping("/by_students/{id}")
-    public ResponseEntity<List<SubjectDTO>> getAllSubjects(@PathVariable Integer id) {
+    public ResponseEntity<List<SubjectDTO>> getAllSubjects(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(studentService.getStudentsSubjects(id));
     }
 }

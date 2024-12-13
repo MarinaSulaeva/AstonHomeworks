@@ -19,7 +19,7 @@ public class StudentController {
     private final StudentService studentService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<StudentDTO> getStudent(@PathVariable int id) {
+    public ResponseEntity<StudentDTO> getStudent(@PathVariable("id") int id) {
         return ResponseEntity.ok(studentService.getStudent(id));
     }
 
@@ -34,7 +34,7 @@ public class StudentController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteStudent(@PathVariable int id) {
+    public ResponseEntity<?> deleteStudent(@PathVariable("id") int id) {
         studentService.deleteStudent(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

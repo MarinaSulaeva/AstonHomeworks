@@ -1,7 +1,6 @@
 package ru.aston.lessons.springboot.astonhomeworks.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,11 +14,11 @@ import java.util.List;
 @RequestMapping("/teacher")
 @RequiredArgsConstructor
 public class TeacherController {
-    @Autowired
+
     private final TeacherService teacherService;
 
     @GetMapping("{id}")
-    public ResponseEntity<TeacherDTO> getTeacher(@PathVariable int id) {
+    public ResponseEntity<TeacherDTO> getTeacher(@PathVariable("id") int id) {
         return ResponseEntity.ok(teacherService.getTeacher(id));
     }
 
@@ -34,7 +33,7 @@ public class TeacherController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteTeacher(@PathVariable int id) {
+    public ResponseEntity<?> deleteTeacher(@PathVariable("id") int id) {
         teacherService.deleteTeacher(id);
         return ResponseEntity.noContent().build();
     }
