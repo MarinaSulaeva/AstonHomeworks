@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 public class StudentEntity extends PeopleEntity{
     @Column(nullable = true)
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "subjects_students",
             joinColumns = @JoinColumn(name = "students_id", referencedColumnName="id"),
