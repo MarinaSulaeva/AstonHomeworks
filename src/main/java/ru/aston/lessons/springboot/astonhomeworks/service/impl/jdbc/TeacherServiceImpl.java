@@ -1,4 +1,4 @@
-package ru.aston.lessons.springboot.astonhomeworks.service.impl;
+package ru.aston.lessons.springboot.astonhomeworks.service.impl.jdbc;
 
 import ru.aston.lessons.springboot.astonhomeworks.DAO.TeacherDAO;
 import ru.aston.lessons.springboot.astonhomeworks.DAO.impl.TeacherDAOImpl;

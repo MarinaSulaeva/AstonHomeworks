@@ -1,9 +1,10 @@
-package ru.aston.lessons.springboot.astonhomeworks.service.impl;
+package ru.aston.lessons.springboot.astonhomeworks.service.impl.jdbc;
 
 import ru.aston.lessons.springboot.astonhomeworks.DAO.StudentDAO;
 import ru.aston.lessons.springboot.astonhomeworks.DAO.impl.StudentDAOImpl;
 import ru.aston.lessons.springboot.astonhomeworks.dto.StudentCreate;
 import ru.aston.lessons.springboot.astonhomeworks.dto.StudentDTO;
+import ru.aston.lessons.springboot.astonhomeworks.dto.SubjectDTO;
 import ru.aston.lessons.springboot.astonhomeworks.exceptions.StudentNotFoundException;
 import ru.aston.lessons.springboot.astonhomeworks.mapper.StudentMapperImpl;
 import ru.aston.lessons.springboot.astonhomeworks.model.Student;
@@ -50,6 +51,11 @@ public class StudentServiceImpl implements StudentService {
         existId(id);
         StudentDAO studentDAO = new StudentDAOImpl();
         studentDAO.deleteStudent(id);
+    }
+
+    @Override
+    public List<SubjectDTO> getStudentsSubjects(int id) throws StudentNotFoundException {
+        return getStudent(id).getSubjectDTOList();
     }
 
     private void existId(int id) throws StudentNotFoundException {

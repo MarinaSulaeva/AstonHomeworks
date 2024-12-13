@@ -1,4 +1,4 @@
-package ru.aston.lessons.springboot.astonhomeworks.servlets;
+package ru.aston.lessons.springboot.astonhomeworks.servlets.jdbc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ru.aston.lessons.springboot.astonhomeworks.dto.SubjectCreate;
@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ru.aston.lessons.springboot.astonhomeworks.exceptions.SubjectNotFoundException;
 import ru.aston.lessons.springboot.astonhomeworks.service.SubjectService;
-import ru.aston.lessons.springboot.astonhomeworks.service.impl.SubjectServiceImpl;
+import ru.aston.lessons.springboot.astonhomeworks.service.impl.jdbc.SubjectServiceImpl;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,7 +17,7 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.Optional;
 
-@WebServlet(urlPatterns = {"/subject/*"})
+@WebServlet(urlPatterns = {"/jdbc/subject/*"})
 public class SubjectServlet extends HttpServlet {
 
     private static void setJsonHeader(HttpServletResponse resp) {
